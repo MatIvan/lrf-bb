@@ -14,13 +14,13 @@
                     
     <!-- error message -->
     <div th:if="${param.error}">
-        <div>Invalid username or password.</div>
+        <div class="alert alert-danger">Invalid username or password.</div>
         <br>
     </div>
 
     <!-- logout message -->
     <div th:if="${param.logout}">
-        <div>You have been logged out.</div>
+        <div class="alert alert-info">You have been logged out.</div>
     </div>
     
     <div>
