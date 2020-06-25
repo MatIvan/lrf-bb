@@ -16,13 +16,13 @@ import ru.mativ.lrfbb.data.service.UserService;
 @EnableWebSecurity
 public class ConfigWebSecurity extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserService userService;
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Autowired
+    private UserService userService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

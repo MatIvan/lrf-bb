@@ -7,13 +7,13 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 
-import ru.mativ.lrfbb.data.ManagerUserUtil;
+import ru.mativ.lrfbb.data.service.UserService;
 
 @SpringBootApplication
 public class LrfBbApplication {
 
     @Autowired
-    private ManagerUserUtil managerUserUtil;
+    private UserService userService;
 
     public static void main(String[] args) {
         SpringApplication.run(LrfBbApplication.class, args);
@@ -21,7 +21,11 @@ public class LrfBbApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     private void checkManager() {
-        System.out.println(managerUserUtil.getOrCreateManagerUser());
+        try {
+            userService.checkManagerUser();
+        } catch (Exception e) {
+            System.out.println("Error create manager: " + e.getMessage());
+        }
     }
 
     @EventListener(InteractiveAuthenticationSuccessEvent.class)

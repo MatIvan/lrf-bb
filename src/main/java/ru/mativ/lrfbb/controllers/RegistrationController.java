@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
 import ru.mativ.lrfbb.data.dto.UserDto;
-import ru.mativ.lrfbb.data.entity.UserEntity;
-import ru.mativ.lrfbb.data.service.RoleService;
 import ru.mativ.lrfbb.data.service.UserService;
 
 @Controller
@@ -26,12 +23,6 @@ public class RegistrationController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     @Qualifier("userValidator")
@@ -56,9 +47,9 @@ public class RegistrationController {
         }
 
         try {
-            createNewUser(user);
+            userService.newUser(user);
         } catch (Exception e) {
-            model.addAttribute("errorMessage", "Ошибка сохранения пользователя.");
+            model.addAttribute("errorMessage", "Error user creation.");
             model.addAttribute("errorDescription", e.getMessage());
             return "users/reg-error";
         }
@@ -68,16 +59,4 @@ public class RegistrationController {
         return "users/reg-success";
     }
 
-    private UserEntity createNewUser(UserDto userDto) {
-        UserEntity managerUser = new UserEntity();
-        managerUser.setLogin(userDto.getLogin());
-        managerUser.setName(userDto.getName());
-        managerUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
-        // TODO get from data base
-        // TODO check findByName result
-        managerUser.addRole(roleService.findByName("USER"));
-
-        return userService.save(managerUser);
-    }
 }
