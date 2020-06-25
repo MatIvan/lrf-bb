@@ -10,9 +10,11 @@
 
     <h1>Registration page.</h1>
 
-    <div th:if="${param.success}">
-        <div>Registration SUCCESS.</div>
+    <p th:each="error: ${#fields.errors('user')}" th:text="${error}">user error</p>
+    <div th:if="${errorMessage}">
+        <p th:text="${error.message}">user error</p>
     </div>
+
 
     <h1>registration form</h1>
     <form action="/registration" th:object="${user}" method="POST"

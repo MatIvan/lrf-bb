@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,9 +17,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
 import ru.mativ.lrfbb.data.dto.UserDto;
+import ru.mativ.lrfbb.data.entity.UserEntity;
+import ru.mativ.lrfbb.data.service.RoleService;
+import ru.mativ.lrfbb.data.service.UserService;
 
 @Controller
 public class RegistrationController {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     @Qualifier("userValidator")
@@ -42,14 +55,29 @@ public class RegistrationController {
             return "users/registration";
         }
 
-        // TODO Save user to db
-        //        if (!userService.saveUser(user)){
-        //            model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
-        //            return "users/registration";
-        //        }
-        
+        try {
+            createNewUser(user);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Ошибка сохранения пользователя.");
+            model.addAttribute("errorDescription", e.getMessage());
+            return "users/reg-error";
+        }
+
         user.setPassword("***"); //hide password
         model.addAttribute("user", user);
         return "users/reg-success";
+    }
+
+    private UserEntity createNewUser(UserDto userDto) {
+        UserEntity managerUser = new UserEntity();
+        managerUser.setLogin(userDto.getLogin());
+        managerUser.setName(userDto.getName());
+        managerUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
+        // TODO get from data base
+        // TODO check findByName result
+        managerUser.addRole(roleService.findByName("USER"));
+
+        return userService.save(managerUser);
     }
 }
