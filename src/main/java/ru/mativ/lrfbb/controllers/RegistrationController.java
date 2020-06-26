@@ -37,13 +37,13 @@ public class RegistrationController {
     public String showRegistrationForm(WebRequest request, Model model) {
         UserDto userDto = new UserDto();
         model.addAttribute("user", userDto);
-        return "users/registration";
+        return "registration/registration";
     }
 
     @PostMapping("registration")
     public String addUser(@ModelAttribute("user") @Valid UserDto user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "users/registration";
+            return "registration/registration";
         }
 
         try {
@@ -51,12 +51,12 @@ public class RegistrationController {
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error user creation.");
             model.addAttribute("errorDescription", e.getMessage());
-            return "users/reg-error";
+            return "registration/reg-error";
         }
 
         user.setPassword("***"); //hide password
         model.addAttribute("user", user);
-        return "users/reg-success";
+        return "registration/reg-success";
     }
 
 }
