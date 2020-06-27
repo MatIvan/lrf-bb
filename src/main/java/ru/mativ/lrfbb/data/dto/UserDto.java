@@ -1,5 +1,7 @@
 package ru.mativ.lrfbb.data.dto;
 
+import ru.mativ.lrfbb.data.entity.UserEntity;
+
 public class UserDto {
 
     private String login;
@@ -35,4 +37,11 @@ public class UserDto {
         return "UserDto [login=" + login + ", name=" + name + ", password=" + password + "]";
     }
 
+    public static UserDto make(UserEntity userEntity) {
+        UserDto userDto = new UserDto();
+        userDto.setLogin(userEntity.getLogin());
+        userDto.setName(userEntity.getName());
+        userDto.setPassword(userEntity.getPassword());
+        return userDto;
+    }
 }

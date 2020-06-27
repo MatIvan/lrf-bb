@@ -1,9 +1,13 @@
 package ru.mativ.lrfbb.data.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import ru.mativ.lrfbb.data.dto.RoleDto;
 import ru.mativ.lrfbb.data.entity.RoleEntity;
 import ru.mativ.lrfbb.data.repository.RoleRepository;
 
@@ -45,5 +49,13 @@ public class RoleService {
 
     public RoleEntity getDefaultManagerRole() {
         return getOrCreateRole(defaultManagerRole);
+    }
+
+    public List<RoleDto> getAllDto() {
+        List<RoleEntity> roles = roleRepository.findAll();
+        return roles
+                .stream()
+                .map(role -> new RoleDto(role.getName()))
+                .collect(Collectors.toList());
     }
 }

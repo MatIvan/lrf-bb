@@ -1,6 +1,7 @@
 package ru.mativ.lrfbb.data.service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,5 +99,13 @@ public class UserService implements UserDetailsService {
         managerUser.addRole(roleService.getDefaultManagerRole());
 
         return save(managerUser);
+    }
+
+    public List<UserDto> getAllDto() {
+        List<UserEntity> users = userRepository.findAll();
+        return users
+                .stream()
+                .map(user -> UserDto.make(user))
+                .collect(Collectors.toList());
     }
 }
