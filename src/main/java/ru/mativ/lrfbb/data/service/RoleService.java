@@ -55,7 +55,7 @@ public class RoleService {
         List<RoleEntity> roles = roleRepository.findAll();
         return roles
                 .stream()
-                .map(role -> new RoleDto(role.getName()))
+                .map(role -> RoleDto.make(role))
                 .collect(Collectors.toList());
     }
 }

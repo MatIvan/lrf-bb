@@ -9,12 +9,21 @@
     <body>
 
         <h1>Users page.</h1>
-        
+
         <hr>
         <h3>All users:</h3>
-        <ul>
-            <li th:each="user : ${users}" th:text="${user.name}">user name</li>
-        </ul>
+        <div>
+            <div th:each="user : ${users}">
+                <div th:text="${user.name}">name</div>
+                <div th:text="${user.login}">login</div>
+                <div>
+                    <ul>
+                        <li th:each="role : ${user.roles}" th:text="${role.name}">role name</li>
+                    </ul>
+                </div>
+            <br>
+            </div>
+        </div>
 
         <hr>
         <h3>All roles:</h3>

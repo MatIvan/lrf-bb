@@ -1,5 +1,8 @@
 package ru.mativ.lrfbb.data.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import ru.mativ.lrfbb.data.entity.UserEntity;
 
 public class UserDto {
@@ -7,6 +10,7 @@ public class UserDto {
     private String login;
     private String name;
     private String password;
+    private List<RoleDto> roles;
 
     public String getLogin() {
         return login;
@@ -32,9 +36,17 @@ public class UserDto {
         this.password = password;
     }
 
+    public List<RoleDto> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RoleDto> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
-        return "UserDto [login=" + login + ", name=" + name + ", password=" + password + "]";
+        return "UserDto [login=" + login + ", name=" + name + ", password=***" + ", roles=" + roles + "]";
     }
 
     public static UserDto make(UserEntity userEntity) {
@@ -42,6 +54,14 @@ public class UserDto {
         userDto.setLogin(userEntity.getLogin());
         userDto.setName(userEntity.getName());
         userDto.setPassword(userEntity.getPassword());
+
+        List<RoleDto> rolesDto = userEntity
+                .getRoles()
+                .stream()
+                .map(role -> RoleDto.make(role))
+                .collect(Collectors.toList());
+
+        userDto.setRoles(rolesDto);
         return userDto;
     }
 }

@@ -47,7 +47,7 @@ public class RegistrationController {
         }
 
         try {
-            userService.newUser(user);
+            user = UserDto.make(userService.newUser(user));
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error user creation.");
             model.addAttribute("errorDescription", e.getMessage());

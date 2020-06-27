@@ -28,6 +28,7 @@ public class UserValidator implements Validator {
             errors.rejectValue("password", "value.empty");
         }
 
+        //filed "roles" may be empty
     }
 
 }

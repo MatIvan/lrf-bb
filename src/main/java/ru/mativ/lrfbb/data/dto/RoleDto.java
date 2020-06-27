@@ -1,5 +1,7 @@
 package ru.mativ.lrfbb.data.dto;
 
+import ru.mativ.lrfbb.data.entity.RoleEntity;
+
 public class RoleDto {
 
     private String name;
@@ -24,4 +26,7 @@ public class RoleDto {
         return "RoleDto [name=" + name + "]";
     }
 
+    public static RoleDto make(RoleEntity roleEntity) {
+        return new RoleDto(roleEntity.getName());
+    }
 }
