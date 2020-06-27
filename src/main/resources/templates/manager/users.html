@@ -17,19 +17,14 @@
                 <div th:text="${user.name}">name</div>
                 <div th:text="${user.login}">login</div>
                 <div>
-                    <ul>
-                        <li th:each="role : ${user.roles}" th:text="${role.name}">role name</li>
-                    </ul>
+                    <div>Roles: </div>
+                    <div th:each="role : ${user.roles}" th:text="${role.name}">role name</div>
                 </div>
             <br>
             </div>
         </div>
 
-        <hr>
-        <h3>All roles:</h3>
-        <ul>
-            <li th:each="role : ${roles}" th:text="${role.name}">role name</li>
-        </ul>
+        <div th:insert="~{manager/userEditForm :: editform( user=${users[1]} )}"></div>
         <hr>
 
     </body>

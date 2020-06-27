@@ -80,7 +80,7 @@ public class UserService implements UserDetailsService {
         managerUser.setLogin(userDto.getLogin());
         managerUser.setName(userDto.getName());
         managerUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        managerUser.addRole(roleService.getDefaultUserRole());
+        managerUser.addRole(roleService.getDefaultUserRole()); //new user have only one (default) role.
 
         return save(managerUser);
     }
