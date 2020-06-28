@@ -37,7 +37,7 @@ public class ConfigWebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/news").hasRole("USER")
 
                 //Доступ разрешен всем пользователей
-                .antMatchers("/", "/resources/**").permitAll()
+                .antMatchers("/", "/resources/**", "/css/**").permitAll()
 
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()

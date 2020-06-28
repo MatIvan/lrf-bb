@@ -5,40 +5,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Login page.</title>
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <link th:href="@{/css/loginPage.css}" rel="stylesheet" />
 </head>
 <body>
 
     <h1>Login page.</h1>
-    
-    <form th:action="@{/login}" method="post">
-                    
-    <!-- error message -->
-    <div th:if="${param.error}">
-        <div>Invalid username or password.</div>
-        <br>
-    </div>
 
-    <!-- logout message -->
-    <div th:if="${param.logout}">
-        <div>You have been logged out.</div>
-    </div>
-    
-    <div>
-        <label for ="login"> login </label> :
-        <input type="text" id ="login" name = "username"/>
-    </div>
-    
-    <div>
-        <label for="password">Password</label>: 
-        <input type="password" id="password" name="password"/>
-    </div>
-    
-    <div>
-        <input type="submit" name="login-submit" id="login-submit" value="Log In" />
-    </div>
-    
-</form>
+    <div class="window login-win">
 
+        <div class="win-caption">
+
+            <div>Login form</div>
+
+            <div th:if="${param.error}">
+                <div>Invalid username or password.</div>
+            </div>
+
+            <div th:if="${param.logout}">
+                <div>You have been logged out.</div>
+            </div>
+        </div>
+
+        <div class="win-body">
+            <form th:action="@{/login}" method="post">
+
+                <div class="form-table">
+                    <div class="form-labelsBox">
+                        <div>Login:</div>
+                        <div>Password:</div>
+                    </div>
+                    <div class="form-inputsBox">
+                        <input type="text" id ="login" name = "username"/>
+                        <input type="password" id ="password" name = "password"/>
+                    </div>
+                </div>
+
+                <div class="form-guiBox">
+                    <div class="flex-filler"></div>
+                    <input  class="login-SubmitBtn"
+                            type="submit"
+                            name="login-submit"
+                            id="login-submit"
+                            value="Log In" />
+                </div>
+
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>

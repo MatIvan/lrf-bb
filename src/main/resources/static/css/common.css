@@ -1,0 +1,49 @@
+.window {
+    border: solid 2px black;
+    border-radius: 6px;
+}
+
+.win-caption {
+    border-bottom: solid 1px black;
+    background-color: whitesmoke;
+    border-radius: 6px 6px 0 0;
+    padding: 6px;
+}
+
+.win-body {
+    margin: 12px;
+}
+
+.form-table {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-labelsBox {
+    margin-right: 8px;
+}
+
+.form-inputsBox {
+    width: 80%;
+}
+
+.form-labelsBox *, .form-inputsBox * {
+    margin-top: 10px;
+}
+
+.form-guiBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 4px;
+    margin-top: 10px;
+}
+
+.form-inputsBox input {
+    width: 94%;
+    margin-top: 8px;
+}
+
+.flex-filler {
+    flex-grow: 1;
+}
