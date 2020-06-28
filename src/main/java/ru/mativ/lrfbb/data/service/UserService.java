@@ -2,6 +2,7 @@ package ru.mativ.lrfbb.data.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ru.mativ.lrfbb.data.dto.UserDto;
+import ru.mativ.lrfbb.data.dto.UserValidator;
 import ru.mativ.lrfbb.data.entity.RoleEntity;
 import ru.mativ.lrfbb.data.entity.UserEntity;
 import ru.mativ.lrfbb.data.repository.UserRepository;
@@ -50,6 +52,14 @@ public class UserService implements UserDetailsService {
 
     public UserEntity findByLogin(String login) {
         return userRepository.findByLogin(login);
+    }
+
+    public UserEntity findById(Integer userId) {
+        Optional<UserEntity> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        return null;
     }
 
     @Override
@@ -107,5 +117,26 @@ public class UserService implements UserDetailsService {
                 .stream()
                 .map(user -> UserDto.make(user))
                 .collect(Collectors.toList());
+    }
+
+    public UserDto save(UserDto userDto) {
+        UserEntity userEntity = findById(userDto.getId());
+        if (userEntity == null) {
+            throw new UsernameNotFoundException("Can't find user by id=" + userDto.getId());
+        }
+        userEntity.setLogin(userDto.getLogin());
+        userEntity.setName(userDto.getName());
+
+        if (UserValidator.validPassword(userDto)) {
+            userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        }
+
+        userEntity.clearRoles();
+        List<RoleEntity> roles = roleService.findListByDto(userDto.getRoles());
+        roles.forEach(role -> userEntity.addRole(role));
+
+        UserEntity saved = userRepository.save(userEntity);
+        UserDto result = UserDto.make(saved);
+        return result;
     }
 }

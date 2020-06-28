@@ -79,6 +79,10 @@ public class UserEntity {
         }
         roles.add(role);
     }
+    
+    public void clearRoles() {
+        roles.clear();
+    }
 
     @Override
     public String toString() {

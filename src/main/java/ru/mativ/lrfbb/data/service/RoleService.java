@@ -58,4 +58,12 @@ public class RoleService {
                 .map(role -> RoleDto.make(role))
                 .collect(Collectors.toList());
     }
+
+    public List<RoleEntity> findListByDto(List<RoleDto> roles) {
+        List<String> names = roles
+                .stream()
+                .map(role -> role.getName())
+                .collect(Collectors.toList());
+        return roleRepository.findAllByNameIn(names);
+    }
 }

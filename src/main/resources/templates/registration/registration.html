@@ -12,7 +12,7 @@
 
     <p th:each="error: ${#fields.errors('user')}" th:text="${error}">user error</p>
     <div th:if="${errorMessage}">
-        <p th:text="${error.message}">user error</p>
+        <p th:text="${errorMessage}">user error</p>
     </div>
 
 

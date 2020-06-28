@@ -1,5 +1,7 @@
 package ru.mativ.lrfbb.data.dto;
 
+import java.util.Objects;
+
 import ru.mativ.lrfbb.data.entity.RoleEntity;
 
 public class RoleDto {
@@ -29,4 +31,22 @@ public class RoleDto {
     public static RoleDto make(RoleEntity roleEntity) {
         return new RoleDto(roleEntity.getName());
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof RoleDto)) {
+            return false;
+        }
+        RoleDto other = (RoleDto) obj;
+        return Objects.equals(name, other.name);
+    }
+
 }

@@ -28,7 +28,22 @@ public class UserValidator implements Validator {
             errors.rejectValue("password", "value.empty");
         }
 
-        //filed "roles" may be empty
+        //fileds "id" and "roles" may be empty
+    }
+
+    public static boolean validPassword(UserDto target) {
+        if (target == null) {
+            return false;
+        }
+
+        final String pass = target.getPassword();
+        if (pass == null || pass.isEmpty()) {
+            return false;
+        }
+
+        // TODO check password validation
+
+        return true;
     }
 
 }

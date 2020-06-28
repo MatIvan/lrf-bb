@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import ru.mativ.lrfbb.data.service.UserService;
 
@@ -30,7 +31,8 @@ public class LrfBbApplication {
 
     @EventListener(InteractiveAuthenticationSuccessEvent.class)
     public void onApplicationEvent(InteractiveAuthenticationSuccessEvent event) {
-        System.out.println("### LOGIN: " + event);
+        String username = ((UserDetails) event.getAuthentication().getPrincipal()).getUsername();
+        System.out.println("### LOGIN: " + username);
         //TODO перенести в отдельный класс событий
     }
 }

@@ -7,10 +7,19 @@ import ru.mativ.lrfbb.data.entity.UserEntity;
 
 public class UserDto {
 
+    private Integer id;
     private String login;
     private String name;
     private String password;
     private List<RoleDto> roles;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getLogin() {
         return login;
@@ -44,13 +53,18 @@ public class UserDto {
         this.roles = roles;
     }
 
+    public boolean hasRole(RoleDto role) {
+        return roles == null ? false : roles.contains(role);
+    }
+
     @Override
     public String toString() {
-        return "UserDto [login=" + login + ", name=" + name + ", password=***" + ", roles=" + roles + "]";
+        return "UserDto [id=" + id + ", login=" + login + ", name=" + name + ", password=" + password + ", roles.size=" + roles.size() + "]";
     }
 
     public static UserDto make(UserEntity userEntity) {
         UserDto userDto = new UserDto();
+        userDto.setId(userEntity.getId());
         userDto.setLogin(userEntity.getLogin());
         userDto.setName(userEntity.getName());
         userDto.setPassword(userEntity.getPassword());
