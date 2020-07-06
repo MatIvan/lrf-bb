@@ -47,3 +47,24 @@
 .flex-filler {
     flex-grow: 1;
 }
+
+.table-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.table-head{
+    display: flex;
+    flex-direction: row;
+}
+
+.table-head-cell{
+    text-align: center;
+    background-color: darkgray;
+    font-weight: bold;
+    color: white;
+}
+
+.table-cell{
+    
+}

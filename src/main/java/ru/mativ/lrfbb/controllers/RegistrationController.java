@@ -51,6 +51,7 @@ public class RegistrationController {
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error user creation.");
             model.addAttribute("errorDescription", e.getMessage());
+            e.printStackTrace();
             return "registration/reg-error";
         }
 

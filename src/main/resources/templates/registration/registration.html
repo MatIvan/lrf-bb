@@ -1,50 +1,53 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="https://www.thymeleaf.org"
-    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Registration page.</title>
+    <meta charset="UTF-8">
+    <title>Registration page.</title>
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <link th:href="@{/css/registrationPage.css}" rel="stylesheet" />
 </head>
 <body>
 
     <h1>Registration page.</h1>
 
-    <p th:each="error: ${#fields.errors('user')}" th:text="${error}">user error</p>
-    <div th:if="${errorMessage}">
-        <p th:text="${errorMessage}">user error</p>
+    <div class="window registration-win">
+        <div class="win-caption">
+            <div>Registration form</div>
+            <div th:each="error: ${#fields.errors('user')}" th:text="'user: ' + ${error}">...</div>
+            <div th:each="error: ${#fields.errors('user.login')}" th:text="'login: ' + ${error}">...</div>
+            <div th:each="error: ${#fields.errors('user.name')}" th:text="'name: ' + ${error}">...</div>
+            <div th:each="error: ${#fields.errors('user.password')}" th:text="'password: ' + ${error}">...</div>
+        </div>
+
+        <div class="win-body">
+
+            <form action="/registration" th:object="${user}" method="POST" enctype="utf8">
+
+                <div class="form-table">
+                    <div class="form-labelsBox">
+                        <div>Login:</div>
+                        <div>Name:</div>
+                        <div>Password:</div>
+                    </div>
+
+                    <div class="form-inputsBox">
+                        <input type="text" id="login" th:field="*{login}" />
+                        <input type="text" id="name" th:field="*{name}" />
+                        <input type="password" id="password" th:field="*{password}" />
+                    </div>
+                </div>
+
+                <div class="form-guiBox">
+                    <div class="flex-filler"></div>
+                    <input  class="registration-SubmitBtn"
+                            type="submit"
+                            value="Register" />
+                </div>
+
+            </form>
+
+        </div>
     </div>
-
-
-    <h1>registration form</h1>
-    <form action="/registration" th:object="${user}" method="POST" enctype="utf8">
-
-        <div>
-            <label for="login"> login: </label>
-            <input type="text" id="login" th:field="*{login}" />
-            <p th:each="error: ${#fields.errors('login')}" th:text="${error}">
-                Validation error
-            </p>
-        </div>
-
-        <div>
-            <label for="name"> name: </label>
-            <input type="text" id="name" th:field="*{name}" />
-            <p th:each="error : ${#fields.errors('name')}" th:text="${error}">
-                Validation error
-            </p>
-        </div>
-
-        <div>
-            <label for="password"> password: </label>
-            <input type="password" id="password" th:field="*{password}" />
-            <p th:each="error : ${#fields.errors('password')}" th:text="${error}">
-                Validation error
-            </p>
-        </div>
-
-        <button type="submit">submit</button>
-    </form>
 
 </body>
 </html>
