@@ -1,0 +1,20 @@
+.edituser-win{
+    width: 360px;
+}
+
+.edituser-SubmitBtn{
+    width: 84px;
+}
+
+.edituser-checkBox{
+    width: 12px !important;
+    margin-top: 0px !important;
+}
+
+.edituser-checkBoxField{
+    margin-top: 0px !important;
+}
+
+.edituser-labelsBox{
+    width: 130px;
+}

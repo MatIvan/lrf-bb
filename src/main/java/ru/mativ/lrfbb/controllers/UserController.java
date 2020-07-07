@@ -38,7 +38,6 @@ public class UserController {
         //TODO process error
         model.addAttribute("user", UserDto.make(user));
         model.addAttribute("allRoles", roleService.getAllDto());
-        model.addAttribute("caption", "Edit user.");
         return "manager/editUserPage";
     }
 
@@ -52,9 +51,8 @@ public class UserController {
         try {
             model.addAttribute("user", userService.save(user));
             model.addAttribute("allRoles", roleService.getAllDto());
-            model.addAttribute("caption", "User saved.");
+            model.addAttribute("errorMessage", "User saved.");
         } catch (Exception e) {
-            model.addAttribute("caption", "Error!");
             model.addAttribute("errorMessage", "Error edit user.");
             model.addAttribute("errorDescription", e.getMessage());
             return view;

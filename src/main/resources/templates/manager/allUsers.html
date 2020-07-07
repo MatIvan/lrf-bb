@@ -44,7 +44,7 @@
                         <div th:each="role : ${user.roles}" th:text="${role.name}">role name</div>
                     </div>
                     <div  class="table-cell allUsers-column-btn">
-                        <input type="button" value="edit" th:onclick="'editUserClick(' + ${user.id} + ');'" />
+                        <a th:href="@{'/editUser?id=' + ${user.id}}">edit</a>;
                     </div>
 
                 </div>
