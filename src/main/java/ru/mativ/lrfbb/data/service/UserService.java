@@ -86,13 +86,13 @@ public class UserService implements UserDetailsService {
     }
 
     public UserEntity newUser(UserDto userDto) {
-        UserEntity managerUser = new UserEntity();
-        managerUser.setLogin(userDto.getLogin());
-        managerUser.setName(userDto.getName());
-        managerUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        managerUser.addRole(roleService.getDefaultUserRole()); //new user have only one (default) role.
+        UserEntity newUser = new UserEntity();
+        newUser.setLogin(userDto.getLogin());
+        newUser.setName(userDto.getName());
+        newUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        newUser.addRole(roleService.getDefaultUserRole()); //new user have only one (default) role.
 
-        return save(managerUser);
+        return save(newUser);
     }
 
     public UserEntity checkManagerUser() {
