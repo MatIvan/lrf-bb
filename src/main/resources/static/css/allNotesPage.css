@@ -1,0 +1,39 @@
+.allNotes-win{
+    width: 800px;
+}
+
+.allNotes-row{
+    border: solid 1px black;
+}
+
+.allNotes-column-id{
+    width: 40px;
+    text-align: center;
+}
+
+.allNotes-column-date{
+    width: 100px;
+    padding-left: 4px;
+}
+
+.allNotes-column-note{
+    width: 200px;
+    padding-left: 4px;
+}
+
+.allNotes-column-comment{
+    width: 200px;
+    padding-left: 4px;
+}
+
+.allNotes-column-houres{
+    width: 40px;
+    padding-left: 4px;
+}
+
+.allNotes-column-btn{
+    width: 50px;
+    text-align: center;
+    padding: 2px;
+}
+

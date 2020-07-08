@@ -8,12 +8,6 @@
         <link th:href="@{/css/common.css}" rel="stylesheet" />
         <link th:href="@{/css/allUsersPage.css}" rel="stylesheet" />
 
-        <script>
-            function editUserClick( userId ){
-                window.open("/editUser?id="+userId);
-            }
-        </script>
-
     </head>
 
     <body>
@@ -34,7 +28,6 @@
                     <div class="table-head-cell allUsers-column-roles">roles</div>
                     <div class="table-head-cell allUsers-column-btn"></div>
                 </div>
-                
 
                 <div class="table-row allUsers-row" th:each="user : ${users}">
                     <div class="table-cell allUsers-column-id" th:text="${user.id}">id</div>

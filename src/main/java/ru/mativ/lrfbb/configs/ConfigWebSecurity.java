@@ -34,6 +34,8 @@ public class ConfigWebSecurity extends WebSecurityConfigurerAdapter {
 
                 //Доступ только для пользователей с ролью Администратор
                 .antMatchers("/manager**/**", "/users**/**").hasRole("MANAGER") //TODO Брать из базы
+
+                // для примера
                 .antMatchers("/news").hasRole("USER")
 
                 //Доступ разрешен всем пользователей

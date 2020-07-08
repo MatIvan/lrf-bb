@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Notes page.</title>
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <link th:href="@{/css/allNotesPage.css}" rel="stylesheet" />
+</head>
+
+<body>
+
+    <h1>Notes page.</h1>
+
+    <div th:text="${user.name}"></div>
+
+    <div class="window allNotes-win">
+        <div class="win-caption">
+            <div>All notes:</div>
+        </div>
+
+        <div class="win-body">
+            <div class="table-head allNotes-row">
+                <div class="table-head-cell allNotes-column-id">id</div>
+                <div class="table-head-cell allNotes-column-date">date</div>
+                <div class="table-head-cell allNotes-column-note">note</div>
+                <div class="table-head-cell allNotes-column-comment">comment</div>
+                <div class="table-head-cell allNotes-column-houres">houres</div>
+                <div class="table-head-cell allNotes-column-btn"></div>
+            </div>
+
+            <div class="table-row allNotes-row" th:each="note : ${notes}">
+                <div class="table-cell allNotes-column-id" th:text="${note.id}">id</div>
+                <div class="table-cell allNotes-column-date" th:text="${note.date}">date</div>
+                <div class="table-cell allNotes-column-note" th:text="${note.note}">note</div>
+                <div class="table-cell allNotes-column-comment" th:text="${note.comment}">comment</div>
+                <div class="table-cell allNotes-column-houres" th:text="${note.houres}">houres</div>
+                <div  class="table-cell allNotes-column-btn">
+                    <a th:href="@{'/note?id=' + ${note.id}}">edit</a>;
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

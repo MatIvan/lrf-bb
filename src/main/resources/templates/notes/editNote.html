@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit note page.</title>
+    <link th:href="@{/css/common.css}" rel="stylesheet" />
+    <link th:href="@{/css/editNotePage.css}" rel="stylesheet" />
+</head>
+
+<body>
+
+    <h1>Edit note page.</h1>
+
+    <div th:text="${user.name}"></div>
+
+    <div class="window editNote-win">
+        <div class="win-caption">
+            <div>Edit note:</div>
+            <div th:each="msg: ${messages}" th:text="${msg}">...</div>
+        </div>
+
+        <div class="win-body">
+        
+            <form action="/note" th:object="${note}" method="POST" enctype="utf8">
+
+                <input type="hidden" th:field="*{id}" />
+                
+                <div class="form-table">
+                    <div class="form-labelsBox editNote-labelsBox">
+                        <div>Date:</div>
+                        <div>Note:</div>
+                        <div>Comment:</div>
+                        <div>Houres:</div>
+                    </div>
+                    <div class="form-inputsBox">
+                        <input type="date" th:field="*{date}" />
+                        <input type="text" th:field="*{note}" />
+                        <input type="text" th:field="*{comment}" />
+                        <input type="number" th:field="*{houres}" />
+                    </div>
+                </div>
+                
+                <div class="form-guiBox">
+                    <div class="flex-filler"></div>
+                    <input  class="editNote-SubmitBtn"
+                            type="submit"
+                            value="Save" />
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

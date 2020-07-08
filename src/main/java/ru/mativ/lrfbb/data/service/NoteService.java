@@ -1,6 +1,7 @@
 package ru.mativ.lrfbb.data.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,14 @@ public class NoteService {
     }
 
     public List<NoteEntity> getAllForUser(UserEntity user) {
-        return noteRepository.finadAllByUserEntity(user);
+        return noteRepository.finadAllByUser(user.getId());
+    }
+
+    public NoteEntity getById(Integer noteId) {
+        Optional<NoteEntity> note = noteRepository.findById(noteId);
+        if (note.isPresent()) {
+            return note.get();
+        }
+        return null;
     }
 }
