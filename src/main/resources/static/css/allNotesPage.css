@@ -1,5 +1,5 @@
 .allNotes-win{
-    width: 800px;
+    width: 1280px;
 }
 
 .allNotes-row{
@@ -17,17 +17,17 @@
 }
 
 .allNotes-column-note{
-    width: 200px;
+    width: 600px;
     padding-left: 4px;
 }
 
 .allNotes-column-comment{
-    width: 200px;
+    width: 600px;
     padding-left: 4px;
 }
 
 .allNotes-column-houres{
-    width: 40px;
+    width: 56px;
     padding-left: 4px;
 }
 
@@ -36,4 +36,3 @@
     text-align: center;
     padding: 2px;
 }
-
