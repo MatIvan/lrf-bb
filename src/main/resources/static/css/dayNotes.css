@@ -1,0 +1,41 @@
+.table-header-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.table-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.cell-header-n{
+    width: 20px;
+}
+
+.cell-header-note{
+    width: 600px;
+}
+
+.cell-header-comment{
+    width: 600px;
+}
+
+.cell-header-houres{
+    width: 60px;
+}
+
+.cell-n{
+    width: 20px;
+}
+
+.cell-note{
+    width: 600px;
+}
+
+.cell-comment{
+    width: 600px;
+}
+
+.cell-houres{
+    width: 60px;
+}

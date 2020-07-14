@@ -1,5 +1,6 @@
 package ru.mativ.lrfbb.data.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,5 +35,9 @@ public class NoteService {
             return note.get();
         }
         return null;
+    }
+
+    public List<NoteEntity> getAllForUserByDay(UserEntity user, Date day) {
+        return noteRepository.finadAllForUserByDay(user.getId(), day);
     }
 }

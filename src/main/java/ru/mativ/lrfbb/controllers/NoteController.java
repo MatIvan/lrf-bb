@@ -81,4 +81,20 @@ public class NoteController {
 
         return "notes/editNote";
     }
+
+    @GetMapping("/day/now")
+    public String dayNotesNow(Model model, Principal principal) {
+        return dayNotesFilter(new Date(System.currentTimeMillis()), model, principal);
+    }
+
+    @GetMapping("/day/filter")
+    public String dayNotesFilter(@RequestParam(value = "date") Date filterDate, Model model, Principal principal) {
+        UserEntity currentUser = userService.findByLogin(principal.getName());
+
+        model.addAttribute("notes", noteService.getAllForUserByDay(currentUser, filterDate));
+        model.addAttribute("user", currentUser);
+        model.addAttribute("messages", new ArrayList<String>());
+        model.addAttribute("filterDay", filterDate);
+        return "notes/dayNotes";
+    }
 }
