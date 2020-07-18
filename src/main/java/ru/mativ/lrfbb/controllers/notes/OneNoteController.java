@@ -1,4 +1,4 @@
-package ru.mativ.lrfbb.controllers;
+package ru.mativ.lrfbb.controllers.notes;
 
 import java.security.Principal;
 import java.sql.Date;
@@ -13,30 +13,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ru.mativ.lrfbb.data.dto.NotesDto;
 import ru.mativ.lrfbb.data.entity.NoteEntity;
 import ru.mativ.lrfbb.data.entity.UserEntity;
 import ru.mativ.lrfbb.data.service.NoteService;
 import ru.mativ.lrfbb.data.service.UserService;
 
 @Controller
-public class NoteController {
+public class OneNoteController {
 
     @Autowired
     NoteService noteService;
 
     @Autowired
     UserService userService;
-
-    @GetMapping("/allnotes")
-    public String getAllNotes(Model model, Principal principal) {
-
-        UserEntity currentUser = userService.findByLogin(principal.getName());
-        model.addAttribute("notesDto", new NotesDto(noteService.getAllForUser(currentUser)));
-        model.addAttribute("user", currentUser);
-
-        return "notes/allNotesPage";
-    }
 
     @GetMapping("/note")
     public String getNote(@RequestParam(value = "id") Integer noteId, Model model, Principal principal) {
@@ -83,39 +72,4 @@ public class NoteController {
         return "notes/editNote";
     }
 
-    @GetMapping("/day/now")
-    public String dayNotesNow(Model model, Principal principal) {
-        return dayNotesFilter(new Date(System.currentTimeMillis()), model, principal);
-    }
-
-    @GetMapping("/day/filter")
-    public String dayNotesFilter(@RequestParam(value = "date") Date filterDate, Model model, Principal principal) {
-        UserEntity currentUser = userService.findByLogin(principal.getName());
-
-        NotesDto notesDto = new NotesDto(noteService.getAllForUserByDay(currentUser, filterDate));
-        notesDto.setDayFilter(filterDate);
-
-        model.addAttribute("notesDto", notesDto);
-        model.addAttribute("user", currentUser);
-        model.addAttribute("messages", new ArrayList<String>());
-        return "notes/dayNotes";
-    }
-
-    @PostMapping("/saveDayNotes")
-    public String saveDayNotes(@ModelAttribute NotesDto notesDto, Model model, Principal principal) {
-        UserEntity currentUser = userService.findByLogin(principal.getName());
-        Date dayFilter = notesDto.getDayFilter();
-
-        if (dayFilter == null) {
-            return "redirect:/day/now";
-        }
-
-        notesDto.getList().forEach((note) -> {
-            note.setUser(currentUser);
-            note.setDate(dayFilter);
-        });
-
-        noteService.saveAll(notesDto.getList());
-        return dayNotesFilter(dayFilter, model, principal);
-    }
 }

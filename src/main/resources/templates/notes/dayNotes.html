@@ -6,65 +6,63 @@
     <title>Day notes.</title>
     <link th:href="@{/css/common.css}" rel="stylesheet" />
     <link th:href="@{/css/dayNotes.css}" rel="stylesheet" />
+
+    <script>
+        function onFilterChange(e){
+            window.open('/day/filter?date='+e.target.value, '_self');
+        }
+
+        function onAddNote(date){
+            window.open('/day/add?date='+date, '_self');
+        }
+    </script>
+
 </head>
 
 <body class="centering-box">
 <div class="centered-box">
 
-    <h1>Трудозатраты за день.</h1>
+    <h2>Трудозатраты за день.</h2>
 
-    <div class="window dayNotes-win">
-        <div class="win-caption">
-            <div th:text="${user.name}"></div>
+    <div class="dayNotes-win">
+        <div>
+            <div style="display: flex; justify-content: space-between;">
+                <div th:text="${user.name}"></div>
+                <input type="date" form="main-form" th:field="${notesDto.dayFilter}" onchange="onFilterChange(event);"/>
+            </div>
             <div th:each="msg: ${messages}" th:text="${msg}">...</div>
         </div>
 
-        <div class="win-body">
-            <form action="#" th:action="@{/saveDayNotes}" th:object="${notesDto}" method="POST">
-                <script>
-                function onFilterChange(e){
-                    console.log("click");
-                    window.open('/day/filter?date='+e.target.value, '_self');
-                }
-                </script>
-                <input type="date" th:field="*{dayFilter}" onchange="onFilterChange(event);"/>
+        <div>
+            <form id="main-form" action="#" th:action="@{/day/save}" th:object="${notesDto}" method="POST">
 
                 <table>
                     <thead>
                         <tr>
-                            <th> #</th>
-                            <th> Тикет:</th>
-                            <th> Коментарий:</th>
-                            <th> Часы:</th>
+                            <th>#</th>
+                            <th>Тикет:</th>
+                            <th>Коментарий:</th>
+                            <th>Часы:</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="note, stat : *{list}">
-
                             <td>
                                 <input type="hidden" th:field="*{list[__${stat.index}__].id}" />
                                 <div class="cell-n" th:text="${stat.count}"></div>
                             </td>
-
-                            <td>
-                                <textarea class="cell-note" rows="3" th:field="*{list[__${stat.index}__].note}"></textarea>
-                            </td>
-
-                            <td>
-                                <textarea class="cell-comment" rows="3" th:field="*{list[__${stat.index}__].comment}"></textarea>
-                            </td>
-
-                            <td>
-                                <input type="number" class="cell-houres" th:field="*{list[__${stat.index}__].houres}" />
-                            </td>
-
+                            <td><textarea class="cell-note" rows="3" th:field="*{list[__${stat.index}__].note}"></textarea></td>
+                            <td><textarea class="cell-comment" rows="3" th:field="*{list[__${stat.index}__].comment}"></textarea></td>
+                            <td><input type="number" class="cell-houres" th:field="*{list[__${stat.index}__].houres}" /></td>
                         </tr>
-
                     </tbody>
                 </table>
 
-                <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
-                <input type="submit" id="submitButton" th:value="Save">
+                <div class="form-gui">
+                    <input type="button" value="Добавить запись" th:filter="${notesDto.dayFilter}" th:onclick="onAddNote(this.getAttribute('filter'));"/>
+                    <input type="submit" id="submitButton" th:value="Сохранить">
+                </div>
+
             </form>
         </div>
     </div>

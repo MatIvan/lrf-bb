@@ -1,21 +1,55 @@
-.dayNotes-win{
+.centered-box{
+    margin: 0;
+}
+
+.dayNotes-win {
     width: 1400px;
 }
 
-.cell-n{
-    width: 20px;
+.cell-n {
+    width: 30px;
+    text-align: center;
 }
 
-.cell-note{
-    width: 600px;
+.cell-note {
+    width: 643px;
     resize: vertical;
+    border: 0;
 }
 
-.cell-comment{
-    width: 600px;
+.cell-comment {
+    width: 642px;
     resize: vertical;
+    border: 0;
 }
 
-.cell-houres{
+.cell-houres {
     width: 60px;
+    border: 0;
+}
+
+table, td, th {
+    border: solid 1px black;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th {
+    text-align: center;
+    background-color: darkgray;
+    font-weight: bold;
+    color: white;
+}
+
+.form-gui{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.form-gui input {
+    width: 200px;
 }
