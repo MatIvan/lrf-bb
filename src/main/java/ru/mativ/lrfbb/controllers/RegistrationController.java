@@ -1,5 +1,7 @@
 package ru.mativ.lrfbb.controllers;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,27 +39,23 @@ public class RegistrationController {
     public String showRegistrationForm(WebRequest request, Model model) {
         UserDto userDto = new UserDto();
         model.addAttribute("user", userDto);
-        return "registration/registration";
+        return "registration";
     }
 
     @PostMapping("registration")
     public String addUser(@ModelAttribute("user") @Valid UserDto user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "registration/registration";
+            return "registration";
         }
 
         try {
             user = UserDto.make(userService.newUser(user));
         } catch (Exception e) {
-            model.addAttribute("errorMessage", "Error user creation.");
-            model.addAttribute("errorDescription", e.getMessage());
-            e.printStackTrace();
-            return "registration/reg-error";
+            model.addAttribute("messages", Arrays.asList("Login already used."));
+            return "registration";
         }
 
-        user.setPassword("***"); //hide password
-        model.addAttribute("user", user);
-        return "registration/reg-success";
+        return "redirect:/";
     }
 
 }

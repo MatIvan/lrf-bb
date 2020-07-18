@@ -1,3 +1,15 @@
+.centering-box{
+    display: flex;
+    margin: 0;
+    justify-content: center;
+}
+
+.centered-box{
+    width: auto;
+    height: auto;
+    margin-top: 14vh;
+}
+
 .window {
     border: solid 2px black;
     border-radius: 6px;

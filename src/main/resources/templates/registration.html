@@ -6,7 +6,8 @@
     <link th:href="@{/css/common.css}" rel="stylesheet" />
     <link th:href="@{/css/registrationPage.css}" rel="stylesheet" />
 </head>
-<body>
+<body class="centering-box">
+    <div class="centered-box">
 
     <h1>Registration page.</h1>
 
@@ -17,6 +18,7 @@
             <div th:each="error: ${#fields.errors('user.login')}" th:text="'login: ' + ${error}">...</div>
             <div th:each="error: ${#fields.errors('user.name')}" th:text="'name: ' + ${error}">...</div>
             <div th:each="error: ${#fields.errors('user.password')}" th:text="'password: ' + ${error}">...</div>
+            <div th:each="msg: ${messages}" th:text="${msg}">...</div>
         </div>
 
         <div class="win-body">
@@ -48,6 +50,6 @@
 
         </div>
     </div>
-
+    </div>
 </body>
 </html>
