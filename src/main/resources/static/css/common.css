@@ -77,6 +77,18 @@
     color: white;
 }
 
-.table-cell{
-    
+table, td, th {
+    border: solid 1px black;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th {
+    text-align: center;
+    background-color: darkgray;
+    font-weight: bold;
+    color: white;
 }

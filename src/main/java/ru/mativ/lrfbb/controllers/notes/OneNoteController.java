@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ru.mativ.lrfbb.controllers.ErrorService;
 import ru.mativ.lrfbb.data.entity.NoteEntity;
 import ru.mativ.lrfbb.data.entity.UserEntity;
 import ru.mativ.lrfbb.data.service.NoteService;
@@ -27,6 +28,9 @@ public class OneNoteController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ErrorService errorService;
+
     @GetMapping("/note")
     public String getNote(@RequestParam(value = "id") Integer noteId, Model model, Principal principal) {
         NoteEntity note = noteService.getById(noteId);
@@ -34,7 +38,7 @@ public class OneNoteController {
         UserEntity noteOwner = note.getUser();
 
         if (noteOwner.getId() != currentUser.getId()) {
-            // TODO process error
+            return errorService.showError(model, "Access deny.", "This note (id=" + noteId + ") for other user.");
         }
 
         model.addAttribute("note", note);
@@ -46,9 +50,14 @@ public class OneNoteController {
 
     @PostMapping("/note")
     public String editNote(@ModelAttribute("note") NoteEntity note, Model model, Principal principal) {
+        NoteEntity oldNote = noteService.getById(note.getId());
         UserEntity currentUser = userService.findByLogin(principal.getName());
-        note.setUser(currentUser);
 
+        if (oldNote.getUser().getId() != currentUser.getId()) {
+            return errorService.showError(model, "Access deny.", "This note (id=" + note.getId() + ") for other user.");
+        }
+
+        note.setUser(currentUser);
         NoteEntity savedNote = noteService.save(note);
         model.addAttribute("note", savedNote);
         model.addAttribute("user", currentUser);

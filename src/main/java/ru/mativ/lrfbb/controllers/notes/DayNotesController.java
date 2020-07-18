@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ru.mativ.lrfbb.controllers.ErrorService;
 import ru.mativ.lrfbb.data.dto.NotesDto;
 import ru.mativ.lrfbb.data.entity.NoteEntity;
 import ru.mativ.lrfbb.data.entity.UserEntity;
@@ -26,6 +27,9 @@ public class DayNotesController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ErrorService errorService;
 
     @GetMapping("/day/now")
     public String dayNow(Model model, Principal principal) {
@@ -51,7 +55,7 @@ public class DayNotesController {
         Date dayFilter = notesDto.getDayFilter();
 
         if (dayFilter == null) {
-            return "redirect:/day/now";
+            return errorService.showError(model, "Filter error.", "Day filter is empty.");
         }
 
         notesDto.getList().forEach((note) -> {
