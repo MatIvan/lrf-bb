@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Index page.</title>
+<link th:href="@{/css/common.css}" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="header" th:fragment="header(userName)">
+
+        <div th:if="${userName}" th:text="${userName}"></div>
+
+        <div>
+            <a href="/allnotes">Все записи</a>
+        </div>
+
+        <div>
+            <a href="/day/now">День</a>
+        </div>
+
+        <div>
+            <a href="/month/now">Месяц</a>
+        </div>
+
+        <div>
+            <a th:unless="${userName}" href="/login">Вход</a>
+            <a th:if="${userName}" href="/logout">Выход</a>
+        </div>
+
+        <div th:unless="${userName}">
+            <a href="/registration">Регистрация</a>
+        </div>
+
+        <div>
+            <a href="/manager">Админка</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

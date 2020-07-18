@@ -1,10 +1,11 @@
-.centering-box{
+.centering-box {
     display: flex;
+    flex-direction: column;
     margin: 0;
-    justify-content: center;
+    align-items: center;
 }
 
-.centered-box{
+.centered-box {
     width: auto;
     height: auto;
     margin-top: 14vh;
@@ -65,12 +66,12 @@
     flex-direction: row;
 }
 
-.table-head{
+.table-head {
     display: flex;
     flex-direction: row;
 }
 
-.table-head-cell{
+.table-head-cell {
     text-align: center;
     background-color: darkgray;
     font-weight: bold;
@@ -91,4 +92,12 @@ th {
     background-color: darkgray;
     font-weight: bold;
     color: white;
+}
+
+.header {
+    display: flex;
+}
+
+.header div {
+    margin-left: 20px;
 }
