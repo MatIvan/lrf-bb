@@ -12,43 +12,61 @@
 <div class="centered-box">
 
     <h1>Трудозатраты за день.</h1>
-    
-    <script>
-        function onDateChange(e){
-            window.open("/day/filter?date="+e.target.value, "_self");
-        }
-    </script>
-    <input type="date" th:value="${filterDay}" onchange="onDateChange(event);"/>
 
-    <div th:text="${user.name}"></div>
-    <div th:each="msg: ${messages}" th:text="${msg}">...</div>
-
-    <div id="data-box">
-        <div class="table-header">
-            <div class="table-header-row">
-                <div class="table-header-cell cell-header-n">#</div>
-                <div class="table-header-cell cell-header-note">Тикет</div>
-                <div class="table-header-cell cell-header-comment">Коментарий</div>
-                <div class="table-header-cell cell-header-houres">Часы</div>
-            </div>
+    <div class="window dayNotes-win">
+        <div class="win-caption">
+            <div th:text="${user.name}"></div>
+            <div th:each="msg: ${messages}" th:text="${msg}">...</div>
         </div>
 
-        <div class="table-body" th:each="note, state : ${notes}">
-            <div class="table-row">
-                <div class="table-cell cell-n" th:text="${state.count}">n</div>
-                <div class="table-cell cell-note" th:text="${note.note}">note</div>
-                <div class="table-cell cell-comment" th:text="${note.comment}">comment</div>
-                <div class="table-cell cell-houres" th:text="${note.houres}">houres</div>
-            </div>
-        </div>
+        <div class="win-body">
+            <form action="#" th:action="@{/saveDayNotes}" th:object="${notesDto}" method="POST">
+                <script>
+                function onFilterChange(e){
+                    console.log("click");
+                    window.open('/day/filter?date='+e.target.value, '_self');
+                }
+                </script>
+                <input type="date" th:field="*{dayFilter}" onchange="onFilterChange(event);"/>
 
-        <div id="summ-data-box">
-            <div>Всего часов: -</div>
-        </div>
-    </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th> #</th>
+                            <th> Тикет:</th>
+                            <th> Коментарий:</th>
+                            <th> Часы:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="note, stat : *{list}">
 
-    <div id="edit-box">
-    
+                            <td>
+                                <input type="hidden" th:field="*{list[__${stat.index}__].id}" />
+                                <div class="cell-n" th:text="${stat.count}"></div>
+                            </td>
+
+                            <td>
+                                <textarea class="cell-note" rows="3" th:field="*{list[__${stat.index}__].note}"></textarea>
+                            </td>
+
+                            <td>
+                                <textarea class="cell-comment" rows="3" th:field="*{list[__${stat.index}__].comment}"></textarea>
+                            </td>
+
+                            <td>
+                                <input type="number" class="cell-houres" th:field="*{list[__${stat.index}__].houres}" />
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+                <input type="submit" id="submitButton" th:value="Save">
+            </form>
+        </div>
     </div>
 </div>
 </body>

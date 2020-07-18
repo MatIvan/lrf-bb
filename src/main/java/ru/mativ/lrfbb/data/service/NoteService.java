@@ -40,4 +40,8 @@ public class NoteService {
     public List<NoteEntity> getAllForUserByDay(UserEntity user, Date day) {
         return noteRepository.finadAllForUserByDay(user.getId(), day);
     }
+
+    public List<NoteEntity> saveAll(List<NoteEntity> notes) {
+        return noteRepository.saveAll(notes);
+    }
 }

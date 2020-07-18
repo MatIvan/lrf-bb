@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ru.mativ.lrfbb.data.dto.NotesDto;
 import ru.mativ.lrfbb.data.entity.NoteEntity;
 import ru.mativ.lrfbb.data.entity.UserEntity;
 import ru.mativ.lrfbb.data.service.NoteService;
@@ -27,11 +28,11 @@ public class NoteController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/notes")
+    @GetMapping("/allnotes")
     public String getAllNotes(Model model, Principal principal) {
 
         UserEntity currentUser = userService.findByLogin(principal.getName());
-        model.addAttribute("notes", noteService.getAllForUser(currentUser));
+        model.addAttribute("notesDto", new NotesDto(noteService.getAllForUser(currentUser)));
         model.addAttribute("user", currentUser);
 
         return "notes/allNotesPage";
@@ -91,10 +92,30 @@ public class NoteController {
     public String dayNotesFilter(@RequestParam(value = "date") Date filterDate, Model model, Principal principal) {
         UserEntity currentUser = userService.findByLogin(principal.getName());
 
-        model.addAttribute("notes", noteService.getAllForUserByDay(currentUser, filterDate));
+        NotesDto notesDto = new NotesDto(noteService.getAllForUserByDay(currentUser, filterDate));
+        notesDto.setDayFilter(filterDate);
+
+        model.addAttribute("notesDto", notesDto);
         model.addAttribute("user", currentUser);
         model.addAttribute("messages", new ArrayList<String>());
-        model.addAttribute("filterDay", filterDate);
         return "notes/dayNotes";
+    }
+
+    @PostMapping("/saveDayNotes")
+    public String saveDayNotes(@ModelAttribute NotesDto notesDto, Model model, Principal principal) {
+        UserEntity currentUser = userService.findByLogin(principal.getName());
+        Date dayFilter = notesDto.getDayFilter();
+
+        if (dayFilter == null) {
+            return "redirect:/day/now";
+        }
+
+        notesDto.getList().forEach((note) -> {
+            note.setUser(currentUser);
+            note.setDate(dayFilter);
+        });
+
+        noteService.saveAll(notesDto.getList());
+        return dayNotesFilter(dayFilter, model, principal);
     }
 }

@@ -11,13 +11,11 @@
 <body class="centering-box">
 <div class="centered-box">
 
-    <h1>Notes page.</h1>
-
-    <div th:text="${user.name}"></div>
+    <h1>All notes:</h1>
 
     <div class="window allNotes-win">
         <div class="win-caption">
-            <div>All notes:</div>
+            <div th:text="${user.name}"></div>
         </div>
 
         <div class="win-body">
@@ -30,7 +28,7 @@
                 <div class="table-head-cell allNotes-column-btn"></div>
             </div>
 
-            <div class="table-row allNotes-row" th:each="note : ${notes}">
+            <div class="table-row allNotes-row" th:each="note : ${notesDto.list}">
                 <div class="table-cell allNotes-column-id" th:text="${note.id}">id</div>
                 <div class="table-cell allNotes-column-date" th:text="${note.date}">date</div>
                 <div class="table-cell allNotes-column-note" th:text="${note.note}">note</div>
