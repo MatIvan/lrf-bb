@@ -26,6 +26,7 @@ public class LrfBbApplication {
             userService.checkManagerUser();
         } catch (Exception e) {
             System.out.println("Error create manager: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

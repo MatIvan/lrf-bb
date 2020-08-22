@@ -32,6 +32,8 @@ public class RoleService {
         if (role != null) {
             return role;
         }
+        role = new RoleEntity();
+        role.setName(roleName);
         return save(role);
     }
 
