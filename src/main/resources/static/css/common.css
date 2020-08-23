@@ -96,6 +96,7 @@ th {
 
 .header {
     display: flex;
+    margin-top: 20px;
 }
 
 .header div {
